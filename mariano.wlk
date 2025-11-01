@@ -63,4 +63,21 @@ object mariano {
 	method tieneGolosinaDeSabor(_sabor) {
 		return golosinas.any({_golosina => _golosina.sabor() == _sabor})
 	}
+	method comprarBombon() {golosinas.add(new Bombon())}
+	method comprarAlfajor() {golosinas.add(new Alfajor())}
+	method comprarCaramelo(unSabor) {golosinas.add(new Caramelo(sabor=unSabor))}
+	method comprarChupetin() {golosinas.add(new Chupetin())}
+	method comprarOblea(){golosinas.add(new Oblea())}
+	method comprarChupelatin(unPeso){golosinas.add(new Chocolatin(pesoInicial = unPeso))}
+	method comprarTuttiFrutti(esLibreDeGluten) {golosinas.add(new Tuttifrutti(libreDeGluten =esLibreDeGluten))}
+	method comprarGolosinaBaniada(unaGolosinaInterior){golosinas.add(new GolosinaBaniada(golosinaInterior = unaGolosinaInterior))}
+	method comprarGolosinas(golosinasAComprar)= golosinasAComprar.forEach({g=>golosinas.add(g)})
+	method baniar(unaGolosina){self.comprarGolosinaBaniada(unaGolosina)}
+}
+
+object heladeraMariano {
+  var property humedad = 0
+	method initialize() {
+		if (!humedad.between(0, 1)) {self.error("Puede tener una humedad entre 0 y 1")}
+	}
 }

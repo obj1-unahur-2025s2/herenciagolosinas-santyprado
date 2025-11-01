@@ -1,6 +1,8 @@
+import mariano.*
 /*
  * Los sabores
  */
+
 object frutilla { }
 object chocolate { }
 object vainilla { }
@@ -34,13 +36,21 @@ class Alfajor {
 
 class Caramelo {
 	var peso = 5
-
+	var sabor 
 	method precio() { return 12 }
 	method peso() { return peso }
 	method mordisco() { peso = peso - 1 }
-	method sabor() { return frutilla }
+	method sabor() { return sabor}
 	method libreGluten() { return true }
 }
+
+class CarameloChocolate inherits Caramelo{
+	override method mordisco() { super() 
+	sabor=chocolate
+	}
+	override method precio() = super() + 1 
+}
+
 
 
 class Chupetin {
@@ -70,9 +80,19 @@ class Oblea {
 			// pierde el 25% del peso
 			peso = peso - (peso * 0.25)
 		}
-	}	
+	}
+
 	method sabor() { return vainilla }
 	method libreGluten() { return false }
+}
+class ObleaCrujiente inherits Oblea{
+	var cantidadMordisco
+	override method mordisco(){
+		super()
+		cantidadMordisco+=1
+		if(cantidadMordisco<=3) peso-=3
+	}
+	method estaDebil() = cantidadMordisco>3 
 }
 
 class Chocolatin {
@@ -89,6 +109,15 @@ class Chocolatin {
 	method sabor() { return chocolate }
 	method libreGluten() { return false }
 
+}
+
+class ChocolatinVip inherits Chocolatin{
+	override method peso()= super() * 1 + self.humedad()
+	method humedad() = heladeraMariano.humedad() 
+}
+
+class ChocolatinPremium inherits ChocolatinVip{
+	override method humedad()= super()*0.5
 }
 
 class GolosinaBaniada {
@@ -119,4 +148,9 @@ class Tuttifrutti {
 	method peso() { return 5 }
 	method libreGluten() { return libreDeGluten }	
 	method libreGluten(valor) { libreDeGluten = valor }
+}
+
+class BombonDuro inherits Bombon{
+	override method mordisco(){ peso-=1}
+	method gradoDureza() = if(self.peso()<8)3 else if (self.peso().between(8, 12)) 2 else 12
 }
